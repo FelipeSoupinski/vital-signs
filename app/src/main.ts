@@ -4,8 +4,10 @@ import App from "./App.vue";
 import router from "./router";
 
 import "./assets/main.css";
+import vuetify from './plugins/vuetify'
 
 new Vue({
   router,
-  render: (h) => h(App),
+  vuetify,
+  render: (h) => h(App)
 }).$mount("#app");
