@@ -1,24 +1,24 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import ProjectRegisterView from '../views/ProjectRegisterView.vue'
+import ProjectListView from '../views/ProjectListView.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: ProjectRegisterView
+    name: 'projects',
+    component: ProjectListView
   },
   {
     path: '/project-register',
     name: 'project-register',
-    component: ProjectRegisterView
+    component: () => import(/* webpackChunkName: "about" */ '../views/ProjectRegisterView.vue')
   },
   {
     path: '/projects',
     name: 'projects',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ProjectListView.vue')
+    component: ProjectListView
   }
 ]
 
