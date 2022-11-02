@@ -9,6 +9,18 @@
         <span>Vital Signs</span>
       </div>
 
+      <v-spacer></v-spacer>
+
+      <router-link to="/projects">
+        <v-btn
+          class="ma-1"
+          color="white"
+          plain
+        >
+          Projects
+        </v-btn>
+      </router-link>
+
       <router-link to="/project-register">
         <v-btn
           class="ma-1"
@@ -16,16 +28,6 @@
           plain
         >
           Project Register
-        </v-btn>
-      </router-link>
-
-      <router-link to="/about">
-        <v-btn
-          class="ma-1"
-          color="white"
-          plain
-        >
-          about
         </v-btn>
       </router-link>
       

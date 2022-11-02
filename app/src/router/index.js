@@ -12,13 +12,13 @@ const routes = [
   },
   {
     path: '/project-register',
-    name: 'home',
+    name: 'project-register',
     component: ProjectRegisterView
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/projects',
+    name: 'projects',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ProjectListView.vue')
   }
 ]
 
