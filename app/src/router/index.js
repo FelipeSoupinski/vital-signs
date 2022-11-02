@@ -11,6 +11,11 @@ const routes = [
     component: ProjectRegisterView
   },
   {
+    path: '/project-register',
+    name: 'home',
+    component: ProjectRegisterView
+  },
+  {
     path: '/about',
     name: 'about',
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
