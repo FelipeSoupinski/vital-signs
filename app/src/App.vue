@@ -9,23 +9,19 @@
         <span>Vital Signs</span>
       </div>
 
+      
     </v-app-bar>
 
     <v-main>
-      <ProjectRegister/>
+      <router-view/>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import ProjectRegister from './components/ProjectRegister';
 
 export default {
   name: 'App',
-
-  components: {
-    ProjectRegister,
-  },
 
   data: () => ({
     //
