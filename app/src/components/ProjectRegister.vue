@@ -5,6 +5,7 @@
     data: () => ({
       valid: true,
       form: {
+        name: '',
         tagStackOverflow: null,
         linkGitHub: null,
       }
@@ -37,10 +38,28 @@
       <v-row class="justify-center text-center mt-15">
         <v-col cols="8">
           <v-text-field
-            v-model="form.tagStackOverflow"
-            label="Tag in Stack Overflow"
+            v-model="form.name"
             :rules="[required]"
-          ></v-text-field>
+          >
+            <template #label>
+              <span>Project Name</span>
+              <span class="mandatory">*</span>
+            </template>
+          </v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row class="justify-center text-center mt-15">
+        <v-col cols="8">
+          <v-text-field
+            v-model="form.tagStackOverflow"
+            :rules="[required]"
+          >
+            <template #label>
+              <span>Tag in Stack Overflow</span>
+              <span class="mandatory">*</span>
+            </template>
+          </v-text-field>
         </v-col>
       </v-row>
 
@@ -48,9 +67,13 @@
         <v-col cols="8">
           <v-text-field
             v-model="form.linkGitHub"
-            label="Link in GitHub"
             :rules="[required]"
-          ></v-text-field>
+          >
+            <template #label>
+              <span>Link in GitHub</span>
+              <span class="mandatory">*</span>
+            </template>
+          </v-text-field>
         </v-col>
       </v-row>
 
@@ -75,6 +98,10 @@
     height: 100%;
     .form {
       margin-top: 5%;
+      .mandatory {
+        color: red;
+        margin-left: 5px;
+      }
     }
   }
 </style>
