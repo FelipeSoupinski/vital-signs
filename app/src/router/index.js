@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import ProjectListView from '../views/ProjectListView.vue'
+import ProjectInfoView from '../views/ProjectInfoView.vue'
 
 Vue.use(VueRouter)
 
@@ -13,12 +14,17 @@ const routes = [
   {
     path: '/project-register',
     name: 'project-register',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ProjectRegisterView.vue')
+    component: () => import('../views/ProjectRegisterView.vue')
   },
   {
     path: '/projects',
     name: 'projects',
     component: ProjectListView
+  },
+  {
+    path: '/projects/:id',
+    name: 'projects-info',
+    component: ProjectInfoView
   }
 ]
 

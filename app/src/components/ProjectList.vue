@@ -70,7 +70,7 @@
 </script>
 
 <template>
-  <v-container class="list-container">
+  <v-container>
     <v-card class="mt-15">
       <v-card-title>
         <v-text-field
@@ -89,7 +89,3 @@
     </v-card>
   </v-container>
 </template>
-
-<style lang="scss" scoped>
-
-</style>
