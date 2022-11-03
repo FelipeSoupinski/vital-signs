@@ -64,6 +64,9 @@
           randomString += caracteres.charAt(Math.floor(Math.random() * caracteres.length))
         }
         return randomString
+      },
+      changeRoute(element) {
+        this.$router.push('/projects/' + element.tagStackOverflow)
       }
     }
   }
@@ -85,6 +88,7 @@
         :headers="headers"
         :items="projects"
         :search="search"
+        @click:row="changeRoute($event)"
       ></v-data-table>
     </v-card>
   </v-container>
