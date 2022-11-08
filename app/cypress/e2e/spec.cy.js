@@ -24,3 +24,11 @@ describe('Should have items', () => {
   })
 
 })
+
+describe('Should search items', () => {
+  it('Should search a project', () => {
+    cy.get('[data-cy="project-search"]').type('Angular.js')
+    cy.get('[data-cy="projects-list"]').find('td').contains('Angular.js')
+  })
+})
+
