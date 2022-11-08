@@ -90,7 +90,7 @@
 
 <template>
   <v-container>
-    <div class="mt-15">
+    <div class="mt-15" data-cy="project-info-chart">
       <LineChartGenerator
         :chart-options="chartOptions"
         :chart-data="chartData"

@@ -60,3 +60,12 @@ describe('Should validate inputs for project register', () => {
     cy.get('[data-cy="project-link-gh-container"]').find('div.v-messages__message').contains('This field is required')
   })
 })
+
+describe('Should view project info', () => {
+  it('Should navigate from projects list to project info', () => {
+    cy.get('[data-cy="projects"]').click()
+    cy.get('[data-cy="projects-list"]').find('td').contains('angularjs').parent('tr').click()
+    cy.url().should('include', '/projects/angularjs')
+    cy.get('[data-cy="project-info-chart"]')
+  })
+})
