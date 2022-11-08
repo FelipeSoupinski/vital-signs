@@ -32,3 +32,14 @@ describe('Should search items', () => {
   })
 })
 
+describe('Should go to links', () => {
+  it('Should go to projects', () => {
+    cy.get('[data-cy="projects"]').click()
+    cy.url().should('include', '/projects')
+  })
+
+  it('Should go to project register', () => {
+    cy.get('[data-cy="project-register"]').click()
+    cy.url().should('include', '/project-register')
+  })
+})
