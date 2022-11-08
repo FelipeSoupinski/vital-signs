@@ -43,3 +43,12 @@ describe('Should go to links', () => {
     cy.url().should('include', '/project-register')
   })
 })
+
+describe('Should validate inputs for project register', () => {
+  it('Should have inputs', () => {
+    cy.get('[data-cy="project-register"]').click()
+    cy.get('[data-cy="project-name"]')
+    cy.get('[data-cy="project-tag-so"]')
+    cy.get('[data-cy="project-link-gh"]')
+  })
+})

@@ -40,6 +40,7 @@
           <v-text-field
             v-model="form.name"
             :rules="[required]"
+            data-cy="project-name"
           >
             <template #label>
               <span>Project Name</span>
@@ -54,6 +55,7 @@
           <v-text-field
             v-model="form.tagStackOverflow"
             :rules="[required]"
+            data-cy="project-tag-so"
           >
             <template #label>
               <span>Tag in Stack Overflow</span>
@@ -68,6 +70,7 @@
           <v-text-field
             v-model="form.linkGitHub"
             :rules="[required]"
+            data-cy="project-link-gh"
           >
             <template #label>
               <span>Link in GitHub</span>
