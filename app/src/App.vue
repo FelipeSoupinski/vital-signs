@@ -16,6 +16,7 @@
           class="ma-1"
           color="white"
           plain
+          data-cy="projects"
         >
           Projects
         </v-btn>
@@ -26,6 +27,7 @@
           class="ma-1"
           color="white"
           plain
+          data-cy="project-register"
         >
           Project Register
         </v-btn>
