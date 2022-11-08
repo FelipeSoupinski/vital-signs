@@ -90,6 +90,7 @@
         :items="projects"
         :search="search"
         @click:row="changeRoute($event)"
+        data-cy="projects-list"
       ></v-data-table>
     </v-card>
   </v-container>

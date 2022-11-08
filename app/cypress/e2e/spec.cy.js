@@ -2,7 +2,7 @@ beforeEach(() => {
   cy.visit('http://localhost:8080/')
 })
 
-describe('empty spec', () => {
+describe('Should have items', () => {
   it('Should have project title', () => {
     cy.get('[data-cy="project-title"]')
   })
@@ -17,6 +17,10 @@ describe('empty spec', () => {
 
   it('Should have a project search', () => {
     cy.get('[data-cy="project-search"]')
+  })
+
+  it('Should have a project list', () => {
+    cy.get('[data-cy="projects-list"]')
   })
 
 })
