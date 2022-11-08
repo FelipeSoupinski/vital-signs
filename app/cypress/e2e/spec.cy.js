@@ -15,4 +15,8 @@ describe('empty spec', () => {
     cy.get('[data-cy="project-register"]')
   })
 
+  it('Should have a project search', () => {
+    cy.get('[data-cy="project-search"]')
+  })
+
 })

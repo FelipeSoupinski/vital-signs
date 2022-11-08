@@ -82,6 +82,7 @@
           label="Search"
           single-line
           hide-details
+          data-cy="project-search"
         ></v-text-field>
       </v-card-title>
       <v-data-table
