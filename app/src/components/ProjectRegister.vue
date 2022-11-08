@@ -36,7 +36,7 @@
       </v-row>
 
       <v-row class="justify-center text-center mt-15">
-        <v-col cols="8">
+        <v-col cols="8" data-cy="project-name-container">
           <v-text-field
             v-model="form.name"
             :rules="[required]"
@@ -51,7 +51,7 @@
       </v-row>
 
       <v-row class="justify-center text-center mt-15">
-        <v-col cols="8">
+        <v-col cols="8" data-cy="project-tag-so-container">
           <v-text-field
             v-model="form.tagStackOverflow"
             :rules="[required]"
@@ -66,7 +66,7 @@
       </v-row>
 
       <v-row class="justify-center text-center mt-15">
-        <v-col cols="8">
+        <v-col cols="8" data-cy="project-link-gh-container">
           <v-text-field
             v-model="form.linkGitHub"
             :rules="[required]"
@@ -86,6 +86,7 @@
             color="success"
             class="float-right"
             @click="validate"
+            data-cy="btn-submit"
           >
             Submit
           </v-btn>

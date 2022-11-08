@@ -51,4 +51,12 @@ describe('Should validate inputs for project register', () => {
     cy.get('[data-cy="project-tag-so"]')
     cy.get('[data-cy="project-link-gh"]')
   })
+
+  it('Should validate required fields', () => {
+    cy.get('[data-cy="project-register"]').click()
+    cy.get('[data-cy="btn-submit"]').click()
+    cy.get('[data-cy="project-name-container"]').find('div.v-messages__message').contains('This field is required')
+    cy.get('[data-cy="project-tag-so-container"]').find('div.v-messages__message').contains('This field is required')
+    cy.get('[data-cy="project-link-gh-container"]').find('div.v-messages__message').contains('This field is required')
+  })
 })
