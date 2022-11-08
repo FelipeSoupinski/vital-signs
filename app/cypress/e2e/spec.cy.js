@@ -1,5 +1,6 @@
 describe('empty spec', () => {
-  it('passes', () => {
+  it('Should have project title', () => {
     cy.visit('http://localhost:8080/')
+    cy.get('[data-cy="project-title"]')
   })
 })

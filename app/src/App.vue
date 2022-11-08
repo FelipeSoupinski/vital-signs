@@ -6,7 +6,7 @@
       dark
     >
       <div class="d-flex align-center">
-        <span>Vital Signs</span>
+        <span data-cy="project-title">Vital Signs</span>
       </div>
 
       <v-spacer></v-spacer>
