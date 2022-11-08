@@ -6,7 +6,7 @@
       dark
     >
       <div class="d-flex align-center">
-        <span>Vital Signs</span>
+        <span data-cy="project-title">Vital Signs</span>
       </div>
 
       <v-spacer></v-spacer>
@@ -16,6 +16,7 @@
           class="ma-1"
           color="white"
           plain
+          data-cy="projects"
         >
           Projects
         </v-btn>
@@ -26,6 +27,7 @@
           class="ma-1"
           color="white"
           plain
+          data-cy="project-register"
         >
           Project Register
         </v-btn>

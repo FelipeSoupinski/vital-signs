@@ -36,10 +36,11 @@
       </v-row>
 
       <v-row class="justify-center text-center mt-15">
-        <v-col cols="8">
+        <v-col cols="8" data-cy="project-name-container">
           <v-text-field
             v-model="form.name"
             :rules="[required]"
+            data-cy="project-name"
           >
             <template #label>
               <span>Project Name</span>
@@ -50,10 +51,11 @@
       </v-row>
 
       <v-row class="justify-center text-center mt-15">
-        <v-col cols="8">
+        <v-col cols="8" data-cy="project-tag-so-container">
           <v-text-field
             v-model="form.tagStackOverflow"
             :rules="[required]"
+            data-cy="project-tag-so"
           >
             <template #label>
               <span>Tag in Stack Overflow</span>
@@ -64,10 +66,11 @@
       </v-row>
 
       <v-row class="justify-center text-center mt-15">
-        <v-col cols="8">
+        <v-col cols="8" data-cy="project-link-gh-container">
           <v-text-field
             v-model="form.linkGitHub"
             :rules="[required]"
+            data-cy="project-link-gh"
           >
             <template #label>
               <span>Link in GitHub</span>
@@ -83,6 +86,7 @@
             color="success"
             class="float-right"
             @click="validate"
+            data-cy="btn-submit"
           >
             Submit
           </v-btn>

@@ -1,11 +1,13 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
+    "cypress/globals": true,
   },
   'extends': [
     'plugin:vue/essential',
-    'eslint:recommended'
+    'eslint:recommended',
+    'plugin:cypress/recommended',
   ],
   parserOptions: {
     parser: '@babel/eslint-parser'

@@ -82,6 +82,7 @@
           label="Search"
           single-line
           hide-details
+          data-cy="project-search"
         ></v-text-field>
       </v-card-title>
       <v-data-table
@@ -89,6 +90,7 @@
         :items="projects"
         :search="search"
         @click:row="changeRoute($event)"
+        data-cy="projects-list"
       ></v-data-table>
     </v-card>
   </v-container>
