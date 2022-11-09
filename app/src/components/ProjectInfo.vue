@@ -82,6 +82,13 @@
       }
     }),
 
+    computed: {
+      getProjectName() {
+        const projectName = this.$route.path.split('/')[2] || ''
+        return projectName[0].toUpperCase() + projectName.slice(1)
+      }
+    },
+
     methods: {
 
     }
@@ -90,6 +97,9 @@
 
 <template>
   <v-container>
+    <div class="text-center">
+      <h1>{{ getProjectName }}</h1>
+    </div>
     <div class="mt-15" data-cy="project-info-chart">
       <LineChartGenerator
         :chart-options="chartOptions"
