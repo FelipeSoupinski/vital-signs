@@ -19,7 +19,7 @@ export class StackExchangeConsumer {
     try {
       const response = await axios.get(
         `${this.apiUrl}/questions?order=desc&sort=votes&site=${this.site}&filter=!-*jbN0CeyJH`
-        + `&run=true&key=${process.env.SO_KEY}&sort=votes&q=${encodeURIComponent(sql)}`
+        + `&run=true&key=${process.env.SO_CLIENT_KEY}&sort=votes&q=${encodeURIComponent(sql)}`
       );
       return response.data.items;
     } catch (error) {
