@@ -9,7 +9,7 @@ const route = Router()
 app.use(express.json())
 
 route.get('/', async (req: Request, res: Response) => {
-  res.json({ message: PostTests().catch(console.error) })
+  res.json({ message: await PostTests().catch(console.error) })
 })
 
 app.use(route)
