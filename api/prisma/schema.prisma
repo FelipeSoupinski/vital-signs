@@ -16,7 +16,7 @@ model Question {
   title               String     @db.VarChar(255)
   body                String?    @db.Text
   link                String?   
-  creation_date       DateTime?
+  creation_date       DateTime
   is_answered         Boolean?
   accepted_answer_id  Int?
   score               Int?
