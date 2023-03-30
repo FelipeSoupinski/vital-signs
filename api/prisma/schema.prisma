@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Question {
+  question_id         Int        @id
+  tag                 String     @db.VarChar(255)
+  title               String     @db.VarChar(255)
+  body                String?    @db.Text
+  link                String?   
+  creation_date       DateTime?
+  is_answered         Boolean?
+  accepted_answer_id  Int?
+  score               Int?
+  answer_count        Int?
+  up_vote_count       Int?
+  down_vote_count     Int?
+  favorite_count      Int?
+  view_count          Int?
+  close_vote_count    Int?
+  delete_vote_count   Int?
+  comment_count       Int?
+}

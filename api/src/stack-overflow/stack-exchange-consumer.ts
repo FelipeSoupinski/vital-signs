@@ -30,7 +30,7 @@ export class StackExchangeConsumer {
         + `&filter=!m()D0hHD1-.cAdT.pjsAjkZHRYozZjv55JmeIEMlPkEH2B_F8nNAsq0A`
         + `&tagged=${this.tag}&run=true&key=${process.env.SO_CLIENT_KEY}`
       )
-      return response.data.items
+      return response.data
     } catch (error) {
       console.error(error)
       throw new Error('Bad API request getQuestions')
