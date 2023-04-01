@@ -3,21 +3,20 @@ import { PrismaClient, Status } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export async function GetQuestionsSO() {
+export async function GetQuestionsSO(
+  tag: string,
+  startDate?: number,
+  endDate?: number,
+) {
   try {
-    const startExecutionTime = new Date().getTime()
-    const tag = 'typescript'
-
     const api = new StackExchangeConsumer(tag)
-    let startDate = new Date('2023-02-01 00:00').getTime() / 1000
-    const endDate = new Date('2023-02-28 23:59').getTime() / 1000
-
+    const startExecutionTime = new Date().getTime()
 
     const metadata = await prisma.metadataSO.create({
       data: {
         project_tag: tag,
-        mining_start_date: new Date(startDate),
-        mining_end_date: new Date(endDate),
+        mining_start_date: startDate ? new Date(startDate) : null,
+        mining_end_date: endDate ? new Date(endDate) : null,
         execution_start_time: new Date(startExecutionTime),
       }
     })
