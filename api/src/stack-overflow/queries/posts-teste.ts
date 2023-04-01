@@ -1,5 +1,5 @@
 import { StackExchangeConsumer } from '../index'
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, Status } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -12,7 +12,17 @@ export async function QuestionTests() {
     let startDate = new Date('2023-02-01 00:00').getTime() / 1000
     const endDate = new Date('2023-02-28 23:59').getTime() / 1000
 
-    let questions
+
+    const metadata = await prisma.metadataSO.create({
+      data: {
+        project_tag: tag,
+        mining_start_date: new Date(startDate),
+        mining_end_date: new Date(endDate),
+        execution_start_time: new Date(startExecutionTime),
+      }
+    })
+
+    let questions, lastQuestion
     let iterations = 0
 
     do {
@@ -28,11 +38,25 @@ export async function QuestionTests() {
         })
       }
 
-      if (questions.items.length-1 >= 0)
-        startDate = Number(questions.items[questions.items.length-1].creation_date) + 1
+      if (questions.items.length-1 >= 0) {
+        lastQuestion = questions.items[questions.items.length-1]
+        startDate = Number(lastQuestion.creation_date) + 1
+      }
 
       iterations++
     } while (questions.has_more && questions.quota_remaining > 0)
+
+    metadata.last_question_id = lastQuestion?.question_id ?? null
+    metadata.last_question_id = lastQuestion?.question_id ?? null
+    metadata.execution_end_time = new Date()
+    metadata.status = Status.FINISHED
+
+    await prisma.metadataSO.update({
+      data: metadata,
+      where: {
+        id: metadata.id
+      }
+    })
 
     await prisma.$disconnect()
 
