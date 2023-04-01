@@ -2,14 +2,14 @@ require('dotenv').config()
 import express from 'express'
 import { Router, Request, Response } from 'express'
 
-import { QuestionTests } from './stack-overflow/queries/posts-teste'
+import { GetQuestionsSO } from './stack-overflow/queries/questions'
 
 const app = express()
 const route = Router()
 app.use(express.json())
 
 route.get('/', async (req: Request, res: Response) => {
-  res.json({ message: await QuestionTests().catch(console.error) })
+  res.json({ message: await GetQuestionsSO().catch(console.error) })
 })
 
 app.use(route)

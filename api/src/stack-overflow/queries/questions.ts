@@ -3,7 +3,7 @@ import { PrismaClient, Status } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export async function QuestionTests() {
+export async function GetQuestionsSO() {
   try {
     const startExecutionTime = new Date().getTime()
     const tag = 'typescript'
