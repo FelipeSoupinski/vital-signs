@@ -29,3 +29,22 @@ model Question {
   delete_vote_count   Int?
   comment_count       Int?
 }
+
+enum Status {
+  RUNNING
+  FINISHED
+  LIMIT_REACHED
+  ERROR
+}
+
+model MetadataSO {
+  id                    Int @id @default(autoincrement())
+  project_tag           String @db.VarChar(255)
+  mining_start_date     DateTime?
+  mining_end_date       DateTime?
+  execution_start_time  DateTime
+  execution_end_time    DateTime?
+  last_question_id      Int?
+  last_question_time    DateTime?
+  status                Status @default(RUNNING)
+}
