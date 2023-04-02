@@ -46,7 +46,7 @@ export async function GetQuestionsSO(
     } while (questions.has_more && questions.quota_remaining > 0)
 
     metadata.last_question_id = lastQuestion?.question_id ?? null
-    metadata.last_question_id = lastQuestion?.question_id ?? null
+    metadata.last_question_time = new Date(Number(lastQuestion?.creation_date)+1) ?? null
     metadata.execution_end_time = new Date()
     metadata.status = Status.FINISHED
 
