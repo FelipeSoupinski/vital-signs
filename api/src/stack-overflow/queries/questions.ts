@@ -8,6 +8,8 @@ export async function GetQuestionsSO(
   startDate?: number,
   endDate?: number,
 ) {
+  let metadataId
+
   try {
     const api = new StackExchangeConsumer(tag)
     const startExecutionTime = new Date().getTime()
@@ -25,11 +27,8 @@ export async function GetQuestionsSO(
       },
     })
 
-    if (lastUpdatedMetadataByTag?.last_question_time) {
-      console.log("lastUpdatedMetadataByTag.last_question_time", lastUpdatedMetadataByTag.last_question_time)
+    if (lastUpdatedMetadataByTag?.last_question_time)
       startDate = (Number(lastUpdatedMetadataByTag.last_question_time) / 1000) + 1
-      console.log("startDate", startDate)
-    }
 
     const metadata = await prisma.metadataSO.create({
       data: {
@@ -39,6 +38,7 @@ export async function GetQuestionsSO(
         execution_start_time: new Date(startExecutionTime),
       }
     })
+    metadataId = metadata.id
 
     let questions, lastQuestion
     let iterations = 0
@@ -79,15 +79,18 @@ export async function GetQuestionsSO(
     })
 
     await prisma.$disconnect()
-
-    console.log('iterations', iterations)
-    console.log('quota_remaining', questions.quota_remaining)
-    console.log('execution time em seconds', (new Date().getTime() - startExecutionTime) / 1000)
-
     return true
 
   } catch (error) {
     console.error(error)
+
+    await prisma.metadataSO.update({
+      data: { status: Status.ERROR },
+      where: {
+        id: metadataId
+      }
+    })
+
     await prisma.$disconnect()
     return false
   }
