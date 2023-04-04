@@ -1,8 +1,7 @@
 require('dotenv').config()
 import express from 'express'
 import { Router, Request, Response } from 'express'
-
-import { QuestionsSOWorker } from './stack-overflow/queries/questions'
+import { makeQuestionsSOWorker } from './stack-overflow/factory'
 
 const app = express()
 const route = Router()
@@ -10,7 +9,7 @@ app.use(express.json())
 
 route.get('/', async (req: Request, res: Response) => {
   const tag = 'fabric'
-  const QuestionSO = new QuestionsSOWorker(tag)
+  const QuestionSO = makeQuestionsSOWorker(tag)
 
   res.json({ 
     message: await QuestionSO.resolve()

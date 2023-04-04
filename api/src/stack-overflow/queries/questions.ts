@@ -1,11 +1,12 @@
-import { StackExchangeConsumer } from '../index'
 import { PrismaClient, Prisma, Status, MetadataSO } from '@prisma/client'
+import { Consumer } from '../protocols'
 
 const prisma = new PrismaClient()
 
 export class QuestionsSOWorker {
   constructor(
-    private readonly tag: string
+    private readonly tag: string,
+    private readonly consumer: Consumer,
   ){}
 
   async resolve(
@@ -15,8 +16,6 @@ export class QuestionsSOWorker {
     let metadataId
   
     try {
-      const api = new StackExchangeConsumer(this.tag)
-  
       const lastUpdatedMetadataByTag = await this.getLastUpdatedMetadataByTag()
   
       if (lastUpdatedMetadataByTag?.last_question_time)
@@ -29,7 +28,7 @@ export class QuestionsSOWorker {
       let iterations = 0
   
       do {
-        questions = await api.getQuestions(startDate, endDate)
+        questions = await this.consumer.getQuestions(startDate, endDate)
   
         for (const question of questions.items) {
           await prisma.question.create({ 
