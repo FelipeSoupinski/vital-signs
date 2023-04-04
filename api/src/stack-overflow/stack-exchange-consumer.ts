@@ -1,14 +1,8 @@
 import axios from 'axios'
 import { Prisma } from '@prisma/client'
+import { Consumer, ResponseSO } from './protocols'
 
-type ResponseSO<T> = {
-  items: T[],
-  has_more: boolean,
-  quota_remaining: number,
-  quota_max: number
-}
-
-export class StackExchangeConsumer {
+export class StackExchangeConsumer implements Consumer {
   constructor(
     private readonly tag: string
   ) {}
