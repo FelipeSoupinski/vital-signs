@@ -1,1 +1,1 @@
-export * from "./questions-so-worker-factory"
+export * from './questions-so-worker-factory'

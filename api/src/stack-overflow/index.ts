@@ -1,1 +1,1 @@
-export * from "./stack-exchange-consumer"
+export * from './stack-exchange-consumer'

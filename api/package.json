@@ -8,7 +8,7 @@
     "dev": "nodemon",
     "build": "rimraf ./build && tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "prettier --config .prettierrc 'src/**/*.ts' --write"
+    "lint": "prettier --config .prettierrc \"src/**/*.ts\" --write"
   },
   "keywords": [],
   "author": "FelipeSoupinski",
