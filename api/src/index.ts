@@ -8,7 +8,7 @@ const route = Router()
 app.use(express.json())
 
 route.get('/', async (req: Request, res: Response) => {
-  const tag = 'fabric'
+  const tag = 'phantomjs'
   const QuestionSO = makeQuestionsSOWorker(tag)
 
   res.json({

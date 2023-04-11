@@ -1,7 +1,8 @@
 import axios from 'axios'
 import PQueue from 'p-queue'
+import { IClient } from './protocols'
 
-class Client {
+class Client implements IClient {
   private static instance: Client = new Client()
 
   private queue: PQueue
