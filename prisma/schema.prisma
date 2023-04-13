@@ -48,3 +48,11 @@ model MetadataSO {
   last_question_time    DateTime?
   status                Status @default(RUNNING)
 }
+
+model Project {
+  id                  Int @id @default(autoincrement())
+  name                String @db.VarChar(255)
+  tag_so              String @db.VarChar(255)
+  link_gh             String @db.VarChar(255)
+  created_at          DateTime @default(now())
+}
