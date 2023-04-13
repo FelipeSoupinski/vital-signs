@@ -1,13 +1,13 @@
 import { PrismaClient, Prisma, Status, MetadataSO } from '@prisma/client'
-import { Consumer } from '../protocols'
+import { Consumer, WorkerSO } from '../protocols'
 
 const prisma = new PrismaClient()
 
-export class QuestionsSOWorker {
+export class QuestionsSOWorker implements WorkerSO {
   constructor(
     private readonly tag: string,
     private readonly consumer: Consumer
-  ) {}
+  ) { }
 
   async resolve(startDate?: number, endDate?: number) {
     let metadataId
