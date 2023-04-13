@@ -2,23 +2,31 @@ import { Worker, QueueEvents } from 'bullmq'
 import { makeQuestionsSOWorker } from '../factory'
 
 export class WorkerQueueProcessor {
-  constructor() { }
+  constructor() {}
 
   async resolve() {
-    const worker = new Worker('Projects', async job => {
-      if (job.name === 'SO') {
-        const questionSOWorker = makeQuestionsSOWorker(job.data.tag_so)
-        const workerResponse = await questionSOWorker.resolve()
-        if (!workerResponse) {
-          throw new Error('Error on get questions in SO worker for project ' + job.data.tag_so)
+    const worker = new Worker(
+      'Projects',
+      async (job) => {
+        if (job.name === 'SO') {
+          const questionSOWorker = makeQuestionsSOWorker(job.data.tag_so)
+          const workerResponse = await questionSOWorker.resolve()
+          if (!workerResponse) {
+            throw new Error(
+              'Error on get questions in SO worker for project ' +
+                job.data.tag_so
+            )
+          }
         }
+      },
+      {
+        connection: {
+          host: process.env.REDIS_HOST,
+          port: Number(process.env.REDIS_PORT)
+        },
+        concurrency: parseInt(process.env.CONCURRENCY || '1')
       }
-    }, {
-      connection: {
-        host: process.env.REDIS_HOST,
-        port: Number(process.env.REDIS_PORT)
-      }
-    })
+    )
 
     const queueEvents = new QueueEvents('Projects', {
       connection: {
@@ -35,7 +43,7 @@ export class WorkerQueueProcessor {
       'failed',
       ({ jobId, failedReason }: { jobId: string; failedReason: string }) => {
         console.error('error', failedReason)
-      },
+      }
     )
   }
 }

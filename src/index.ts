@@ -1,27 +1,23 @@
 require('dotenv').config()
 import express from 'express'
 import { Router, Request, Response } from 'express'
-import { makeQuestionsSOWorker, Scheduler, WorkerQueueProcessor } from './stack-overflow'
+import {
+  makeQuestionsSOWorker,
+  Scheduler,
+  WorkerQueueProcessor
+} from './stack-overflow'
 
 const app = express()
 const route = Router()
 app.use(express.json())
 
 route.get('/', async (req: Request, res: Response) => {
-  try {
-    const scheduler = new Scheduler()
-    const workerQueueProcessor = new WorkerQueueProcessor()
+  res.json({ message: 'OK' })
+})
 
-    await scheduler.resolve()
-    await workerQueueProcessor.resolve()
-  }
-  catch (error) {
-    console.error(error)
-  }
-
-  res.json({
-    message: 'OK'
-  })
+route.get('/schedule', async (req: Request, res: Response) => {
+  await new Scheduler().resolve()
+  res.json({ message: 'OK' })
 })
 
 route.get('/questions', async (req: Request, res: Response) => {
@@ -35,4 +31,13 @@ route.get('/questions', async (req: Request, res: Response) => {
 
 app.use(route)
 
-app.listen(3333, () => 'server running on port 3333')
+app.listen(3333, async () => {
+  console.log('server running on port 3333')
+
+  try {
+    await new Scheduler().resolve()
+    await new WorkerQueueProcessor().resolve()
+  } catch (error) {
+    console.error(error)
+  }
+})
