@@ -5,7 +5,7 @@ export class WorkerQueueProcessor {
   constructor() { }
 
   async resolve() {
-    new Worker(
+    const worker = new Worker(
       'Projects',
       async (job) => {
         if (job.name === 'SO') {
@@ -35,14 +35,16 @@ export class WorkerQueueProcessor {
       }
     })
 
-    queueEvents.on('completed', ({ jobId }) => {
+    queueEvents.on('completed', async ({ jobId }) => {
       console.log('done', jobId)
+      await worker.close()
     })
 
     queueEvents.on(
       'failed',
-      ({ jobId, failedReason }: { jobId: string; failedReason: string }) => {
+      async ({ jobId, failedReason }: { jobId: string; failedReason: string }) => {
         console.error('error', failedReason)
+        await worker.close()
       }
     )
   }

@@ -19,5 +19,7 @@ export class Scheduler {
       queue.add('SO', project)
       console.log('added', project)
     }
+
+    await queue.close()
   }
 }
