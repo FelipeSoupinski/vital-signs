@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 export class Scheduler {
   constructor() { }
 
-  async resolve() {
+  async run() {
     const projects = await prisma.project.findMany()
     const queue = new Queue('Projects', {
       connection: {

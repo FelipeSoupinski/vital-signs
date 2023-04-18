@@ -2,10 +2,10 @@ import { Worker, QueueEvents } from 'bullmq'
 import { makeQuestionsSOWorker } from '../factory'
 
 export class WorkerQueueProcessor {
-  constructor() {}
+  constructor() { }
 
   async resolve() {
-    const worker = new Worker(
+    new Worker(
       'Projects',
       async (job) => {
         if (job.name === 'SO') {
@@ -14,7 +14,7 @@ export class WorkerQueueProcessor {
           if (!workerResponse) {
             throw new Error(
               'Error on get questions in SO worker for project ' +
-                job.data.tag_so
+              job.data.tag_so
             )
           }
         }
@@ -36,7 +36,7 @@ export class WorkerQueueProcessor {
     })
 
     queueEvents.on('completed', ({ jobId }) => {
-      console.log('done')
+      console.log('done', jobId)
     })
 
     queueEvents.on(
