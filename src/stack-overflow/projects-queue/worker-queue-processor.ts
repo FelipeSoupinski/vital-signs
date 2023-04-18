@@ -35,16 +35,14 @@ export class WorkerQueueProcessor {
       }
     })
 
-    queueEvents.on('completed', async ({ jobId }) => {
+    queueEvents.on('completed', ({ jobId }) => {
       console.log('done', jobId)
-      await worker.close()
     })
 
     queueEvents.on(
       'failed',
-      async ({ jobId, failedReason }: { jobId: string; failedReason: string }) => {
+      ({ jobId, failedReason }: { jobId: string; failedReason: string }) => {
         console.error('error', failedReason)
-        await worker.close()
       }
     )
   }
