@@ -49,7 +49,6 @@ export class QuestionsSOWorker implements WorkerSO {
       } while (questions.has_more && questions.quota_remaining > 0)
 
       await this.updateMetadata(lastQuestion, metadata, response)
-      await prisma.$disconnect()
       return true
     } catch (error) {
       console.error(error)
@@ -60,8 +59,6 @@ export class QuestionsSOWorker implements WorkerSO {
           id: metadataId
         }
       })
-
-      await prisma.$disconnect()
       return false
     }
   }
