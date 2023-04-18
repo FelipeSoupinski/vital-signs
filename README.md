@@ -2,7 +2,14 @@
 
 Open source project to analyze signs of software ecosystems' death.
 
-.env config vars
+## Redis
+
+Require Redis connection
+See more here https://developer.redis.com/howtos/quick-start
+After installed run `redis-server` command
+
+## .env config vars
+
 SO_CLIENT_ID
 SO_CLIENT_SECRET
 SO_CLIENT_KEY
