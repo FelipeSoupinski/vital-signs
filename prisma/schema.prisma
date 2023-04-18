@@ -11,10 +11,10 @@ datasource db {
 }
 
 model Question {
-  question_id         Int        @id
-  tag                 String     @db.VarChar(255)
-  title               String     @db.VarChar(255)
-  body                String?    @db.Text
+  question_id         Int @id
+  tag                 String @db.VarChar(255)
+  title               String @db.VarChar(255)
+  body                String? @db.Text
   link                String?   
   creation_date       DateTime
   is_answered         Boolean?
@@ -33,20 +33,22 @@ model Question {
 enum Status {
   RUNNING
   FINISHED
-  LIMIT_REACHED
   ERROR
 }
 
 model MetadataSO {
-  id                    Int @id @default(autoincrement())
-  project_tag           String @db.VarChar(255)
-  mining_start_date     DateTime?
-  mining_end_date       DateTime?
-  execution_start_time  DateTime
-  execution_end_time    DateTime?
-  last_question_id      Int?
-  last_question_time    DateTime?
-  status                Status @default(RUNNING)
+  id                        Int @id @default(autoincrement())
+  project_tag               String @db.VarChar(255)
+  mining_start_date         DateTime?
+  mining_end_date           DateTime?
+  execution_start_time      DateTime
+  execution_end_time        DateTime?
+  last_question_id          Int?
+  last_question_time        DateTime?
+  status                    Status @default(RUNNING)
+  info_message              String? @db.Text
+  total_questions           Int
+  total_questions_processed Int
 }
 
 model Project {
