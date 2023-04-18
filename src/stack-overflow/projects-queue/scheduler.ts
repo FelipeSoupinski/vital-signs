@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { Queue } from 'bullmq'
+import { ProjectQueue } from './project-queue'
 
 const prisma = new PrismaClient()
 
@@ -8,15 +8,10 @@ export class Scheduler {
 
   async run() {
     const projects = await prisma.project.findMany()
-    const queue = new Queue('Projects', {
-      connection: {
-        host: process.env.REDIS_HOST,
-        port: Number(process.env.REDIS_PORT)
-      }
-    })
+    const projectQueue = ProjectQueue.getInstance().queue
 
     for (const project of projects) {
-      queue.add('SO', project)
+      projectQueue.add('SO', project)
       console.log('added', project)
     }
   }

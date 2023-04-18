@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient } from '@prisma/client'
-import { Queue } from 'bullmq'
+import { ProjectQueue } from '../projects-queue'
 
 const prisma = new PrismaClient()
 
@@ -20,14 +20,8 @@ export class ProjectAdd {
       const projectCreated = await prisma.project.create({ data })
 
       if (projectCreated) {
-        const queue = new Queue('Projects', {
-          connection: {
-            host: process.env.REDIS_HOST,
-            port: Number(process.env.REDIS_PORT)
-          }
-        })
-
-        queue.add('SO', projectCreated, { priority: 1 })
+        const projectQueue = ProjectQueue.getInstance().queue
+        projectQueue.add('SO', projectCreated, { priority: 1 })
         console.log('added', projectCreated)
       }
 
