@@ -24,7 +24,12 @@ export class WorkerQueueProcessor {
           host: process.env.REDIS_HOST,
           port: Number(process.env.REDIS_PORT)
         },
-        concurrency: parseInt(process.env.CONCURRENCY || '1')
+        concurrency: parseInt(process.env.CONCURRENCY || '1'),
+        autorun: true,
+        limiter: {
+          max: 1,
+          duration: 1000
+        }
       }
     )
 
