@@ -1,5 +1,5 @@
 import { PrismaClient, Prisma, Status, MetadataSO } from '@prisma/client'
-import { Consumer, WorkerSO } from '../protocols'
+import { Consumer, ResponseSO, WorkerSO } from '../protocols'
 
 const prisma = new PrismaClient()
 
@@ -15,18 +15,19 @@ export class QuestionsSOWorker implements WorkerSO {
     try {
       const lastUpdatedMetadataByTag = await this.getLastUpdatedMetadataByTag()
 
-      if (lastUpdatedMetadataByTag?.last_question_time)
-        startDate =
-          Number(lastUpdatedMetadataByTag.last_question_time) / 1000 + 1
+      if (lastUpdatedMetadataByTag?.last_question_time) {
+        startDate = Number(lastUpdatedMetadataByTag.last_question_time) / 1000 + 1
+      }
 
       const metadata = await this.createMetadata()
-      metadataId = metadata.id
-
-      let questions, lastQuestion
+      let questions, lastQuestion, response
       let iterations = 0
 
+      metadataId = metadata.id
+
       do {
-        questions = await this.consumer.getQuestions(startDate, endDate)
+        response = await this.consumer.getQuestions(startDate, endDate)
+        questions = response.data
 
         for (const question of questions.items) {
           await prisma.question.create({
@@ -44,9 +45,10 @@ export class QuestionsSOWorker implements WorkerSO {
         }
 
         iterations++
+        await this.updateMetadata(lastQuestion, metadata, response)
       } while (questions.has_more && questions.quota_remaining > 0)
 
-      await this.updateMetadata(lastQuestion, metadata)
+      await this.updateMetadata(lastQuestion, metadata, response)
       await prisma.$disconnect()
       return true
     } catch (error) {
@@ -87,14 +89,17 @@ export class QuestionsSOWorker implements WorkerSO {
         project_tag: this.tag,
         mining_start_date: startDate ? new Date(startDate * 1000) : null,
         mining_end_date: endDate ? new Date(endDate * 1000) : null,
-        execution_start_time: new Date(startExecutionTime)
+        execution_start_time: new Date(startExecutionTime),
+        total_questions: 0,
+        total_questions_processed: 0,
       }
     })
   }
 
   async updateMetadata(
     lastQuestion: Prisma.QuestionCreateInput | undefined,
-    metadata: MetadataSO
+    metadata: MetadataSO,
+    responseSO: ResponseSO<Prisma.QuestionCreateInput>,
   ) {
     if (lastQuestion?.creation_date) {
       metadata.last_question_time = new Date(
@@ -104,6 +109,10 @@ export class QuestionsSOWorker implements WorkerSO {
     metadata.last_question_id = lastQuestion?.question_id ?? null
     metadata.execution_end_time = new Date()
     metadata.status = Status.FINISHED
+    metadata.total_questions = responseSO.data.total
+    metadata.total_questions_processed = metadata.total_questions_processed
+      ? metadata.total_questions_processed + responseSO.data.items.length
+      : responseSO.data.items.length
 
     await prisma.metadataSO.update({
       data: metadata,

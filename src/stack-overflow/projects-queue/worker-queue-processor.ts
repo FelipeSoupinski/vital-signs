@@ -5,7 +5,7 @@ export class WorkerQueueProcessor {
   constructor() { }
 
   async resolve() {
-    const worker = new Worker(
+    new Worker(
       'Projects',
       async (job) => {
         if (job.name === 'SO') {

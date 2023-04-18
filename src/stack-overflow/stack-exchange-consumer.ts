@@ -30,8 +30,8 @@ export class StackExchangeConsumer implements Consumer {
         `&filter=!m()D0hGBUSIeCfI2Xo7TEcCTCLFnDz0kyM33*WmH4pJaCgs7hjd4.9df` +
         `&tagged=${this.tag}&run=true&key=${process.env.SO_CLIENT_KEY}`
 
-      const response = await this.client.get(queryUrl)
-      return response?.data ?? response
+      const response: any = await this.client.get(queryUrl)
+      return response
     } catch (error) {
       console.error(error)
       throw new Error('Bad API request getQuestions')

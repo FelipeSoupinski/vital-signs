@@ -27,9 +27,8 @@ export class ProjectAdd {
           }
         })
 
-        await queue.add('SO', projectCreated, { priority: 1 })
-
-        await queue.close()
+        queue.add('SO', projectCreated, { priority: 1 })
+        console.log('added', projectCreated)
       }
 
       return !!projectCreated
