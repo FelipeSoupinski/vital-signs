@@ -1,6 +1,7 @@
 require('dotenv').config()
 import express from 'express'
 import { Router, Request, Response } from 'express'
+import { ProjectAdd } from './stack-overflow/project/project-add'
 import {
   makeQuestionsSOWorker,
   Scheduler,
@@ -26,6 +27,18 @@ route.get('/questions', async (req: Request, res: Response) => {
 
   res.json({
     message: await QuestionSO.resolve().catch(console.error)
+  })
+})
+
+route.post('/project', async (req: Request, res: Response) => {
+  const data = {
+    name: req.body.name,
+    tag_so: req.body.tag_so,
+    link_gh: req.body.link_gh
+  }
+
+  res.json({
+    message: await new ProjectAdd().add(data).catch(console.error)
   })
 })
 
