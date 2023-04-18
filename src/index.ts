@@ -2,13 +2,30 @@ require('dotenv').config()
 import express from 'express'
 import { Router, Request, Response } from 'express'
 import { ProjectAdd } from './stack-overflow/project/project-add'
+import { createBullBoard } from '@bull-board/api'
+import { BullMQAdapter } from '@bull-board/api/bullMQAdapter'
+import { ExpressAdapter } from '@bull-board/express'
 import {
   makeQuestionsSOWorker,
+  ProjectQueue,
   Scheduler,
   WorkerQueueProcessor
 } from './stack-overflow'
 
+const projectQueue = ProjectQueue.getInstance().queue
+const bullAdapter = new BullMQAdapter(projectQueue)
+const serverAdapter = new ExpressAdapter()
+serverAdapter.setBasePath('/admin/queues')
+
+const bullBoard = createBullBoard({
+  queues: [bullAdapter],
+  serverAdapter
+})
+
 const app = express()
+
+app.use('/admin/queues', serverAdapter.getRouter())
+
 const route = Router()
 app.use(express.json())
 
