@@ -10,4 +10,5 @@ export interface IMetadataControl {
     responseSO: ResponseSO<Prisma.QuestionCreateInput>,
     status: Status
   ) => Promise<void>
+  saveMetadataOnError: (metadataId: number, errorMessage: string) => Promise<void>
 }

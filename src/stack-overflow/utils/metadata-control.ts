@@ -12,7 +12,9 @@ export class MetadataControl implements IMetadataControl {
     return await prisma.metadataSO.findFirst({
       where: {
         project_tag: this.tag,
-        status: Status.FINISHED,
+        status: {
+          not: Status.RUNNING
+        },
         last_question_time: {
           not: null
         }
@@ -63,6 +65,29 @@ export class MetadataControl implements IMetadataControl {
       data: metadata,
       where: {
         id: metadata.id
+      }
+    })
+  }
+
+  async saveMetadataOnError(metadataId: number, errorMessage: string) {
+    const lastQuestion = await prisma.question.findFirst({
+      where: {
+        tag: this.tag
+      },
+      orderBy: {
+        question_id: 'desc'
+      }
+    })
+
+    await prisma.metadataSO.update({
+      data: {
+        status: Status.ERROR,
+        info_message: errorMessage,
+        last_question_id: lastQuestion?.question_id,
+        last_question_time: lastQuestion?.creation_date
+      },
+      where: {
+        id: metadataId
       }
     })
   }
