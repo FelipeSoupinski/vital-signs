@@ -54,8 +54,20 @@ export class QuestionsSOWorker implements WorkerSO {
     } catch (error) {
       console.error(error)
 
+      const lastQuestion = await prisma.question.findFirst({
+        where: {
+          tag: this.tag
+        },
+        orderBy: {
+          question_id: 'desc'
+        }
+      })
+
       await prisma.metadataSO.update({
-        data: { status: Status.ERROR },
+        data: {
+          status: Status.FINISHED,
+          last_question_id: lastQuestion?.question_id
+        },
         where: {
           id: metadataId
         }
