@@ -1,11 +1,19 @@
 import { Prisma, PrismaClient } from '@prisma/client'
-import { ProjectQueue } from '../projects-queue'
+import { ProjectQueue } from '../stack-overflow/projects-queue'
 
 const prisma = new PrismaClient()
 
-export class ProjectAdd {
+export class ProjectModel {
 
-  async add(data: Prisma.ProjectCreateInput): Promise<boolean> {
+  async getAll() {
+    try {
+      return await prisma.project.findMany()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async create(data: Prisma.ProjectCreateInput): Promise<boolean> {
     try {
       const projectAlreadyExists = !!await prisma.project.findFirst({
         where: {

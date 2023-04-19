@@ -1,7 +1,7 @@
 require('dotenv').config()
 import express from 'express'
 import { Router, Request, Response } from 'express'
-import { ProjectAdd } from './stack-overflow/project/project-add'
+import { ProjectModel } from './project/project-model'
 import { createBullBoard } from '@bull-board/api'
 import { BullMQAdapter } from '@bull-board/api/bullMQAdapter'
 import { ExpressAdapter } from '@bull-board/express'
@@ -55,7 +55,7 @@ route.post('/project', async (req: Request, res: Response) => {
   }
 
   res.json({
-    message: await new ProjectAdd().add(data).catch(console.error)
+    message: await new ProjectModel().create(data).catch(console.error)
   })
 })
 
