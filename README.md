@@ -8,6 +8,8 @@ Require Redis connection
 See more here https://developer.redis.com/howtos/quick-start
 After installed run `redis-server` command
 
+Overcommit config in WSL2 `sudo sysctl -w vm.overcommit_memory=1`
+
 ## .env config vars
 
 SO_CLIENT_ID

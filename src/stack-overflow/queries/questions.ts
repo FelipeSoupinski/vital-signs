@@ -45,10 +45,10 @@ export class QuestionsSOWorker implements WorkerSO {
         }
 
         iterations++
-        await this.updateMetadata(lastQuestion, metadata, response)
+        await this.updateMetadata(lastQuestion, metadata, response, Status.RUNNING)
       } while (questions.has_more && questions.quota_remaining > 0)
 
-      await this.updateMetadata(lastQuestion, metadata, response)
+      await this.updateMetadata(lastQuestion, metadata, response, Status.FINISHED)
       return true
     } catch (error) {
       console.error(error)
@@ -97,6 +97,7 @@ export class QuestionsSOWorker implements WorkerSO {
     lastQuestion: Prisma.QuestionCreateInput | undefined,
     metadata: MetadataSO,
     responseSO: ResponseSO<Prisma.QuestionCreateInput>,
+    status: Status
   ) {
     if (lastQuestion?.creation_date) {
       metadata.last_question_time = new Date(
@@ -105,8 +106,10 @@ export class QuestionsSOWorker implements WorkerSO {
     }
     metadata.last_question_id = lastQuestion?.question_id ?? null
     metadata.execution_end_time = new Date()
-    metadata.status = Status.FINISHED
-    metadata.total_questions = responseSO.data.total
+    metadata.status = status
+    metadata.total_questions = metadata.total_questions
+      ? metadata.total_questions
+      : responseSO.data.total
     metadata.total_questions_processed = metadata.total_questions_processed
       ? metadata.total_questions_processed + responseSO.data.items.length
       : responseSO.data.items.length
