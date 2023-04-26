@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express'
-import { ProjectModel } from './project/project-model'
+import { ProjectModel, MetadataSOModel } from './model'
 import { Scheduler } from './stack-overflow'
 
 const route = Router()
@@ -27,7 +27,24 @@ route.post('/project', async (req: Request, res: Response) => {
 
 route.get('/projects', async (req: Request, res: Response) => {
   res.json({
-    success: await new ProjectModel().getAll()
+    success: true,
+    data: await new ProjectModel().getAll()
+  })
+})
+
+route.get('/metadata', async (req: Request, res: Response) => {
+  res.json({
+    success: true,
+    data: await new MetadataSOModel().getAll()
+  })
+})
+
+route.get('/metadata:tag', async (req: Request, res: Response) => {
+  const tag = req.params.tag
+
+  res.json({
+    success: true,
+    data: await new MetadataSOModel().getByTag(tag)
   })
 })
 
