@@ -18,7 +18,7 @@ route.get('/questions', async (req: Request, res: Response) => {
   const QuestionSO = makeQuestionsSOWorker(tag)
 
   res.json({
-    success: await QuestionSO.resolve().catch(console.error)
+    success: await QuestionSO.resolve()
   })
 })
 
@@ -30,7 +30,13 @@ route.post('/project', async (req: Request, res: Response) => {
   }
 
   res.json({
-    success: await new ProjectModel().create(data).catch(console.error)
+    success: await new ProjectModel().create(data)
+  })
+})
+
+route.get('/projects', async (req: Request, res: Response) => {
+  res.json({
+    success: await new ProjectModel().getAll()
   })
 })
 
