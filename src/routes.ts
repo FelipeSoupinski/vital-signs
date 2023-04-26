@@ -5,12 +5,12 @@ import { makeQuestionsSOWorker, Scheduler } from './stack-overflow'
 const route = Router()
 
 route.get('/', async (req: Request, res: Response) => {
-  res.json({ message: 'OK' })
+  res.json({ success: true })
 })
 
 route.get('/schedule', async (req: Request, res: Response) => {
   await new Scheduler().run()
-  res.json({ message: 'OK' })
+  res.json({ success: true })
 })
 
 route.get('/questions', async (req: Request, res: Response) => {
@@ -18,7 +18,7 @@ route.get('/questions', async (req: Request, res: Response) => {
   const QuestionSO = makeQuestionsSOWorker(tag)
 
   res.json({
-    message: await QuestionSO.resolve().catch(console.error)
+    success: await QuestionSO.resolve().catch(console.error)
   })
 })
 
@@ -30,7 +30,7 @@ route.post('/project', async (req: Request, res: Response) => {
   }
 
   res.json({
-    message: await new ProjectModel().create(data).catch(console.error)
+    success: await new ProjectModel().create(data).catch(console.error)
   })
 })
 
