@@ -1,5 +1,6 @@
 import { PrismaClient, Status, Prisma } from '@prisma/client'
-import { Consumer, IMetadataControl, WorkerSO } from '../protocols'
+import { IMetadataModel } from '../../model/protocols'
+import { Consumer, WorkerSO } from '../protocols'
 
 const prisma = new PrismaClient()
 
@@ -7,20 +8,20 @@ export class QuestionsSOWorker implements WorkerSO {
   constructor(
     private readonly tag: string,
     private readonly consumer: Consumer,
-    private readonly metadata: IMetadataControl,
+    private readonly metadata: IMetadataModel,
   ) { }
 
   async resolve(startDate?: number, endDate?: number) {
     let metadataId
 
     try {
-      const lastUpdatedMetadataByTag = await this.metadata.getLastUpdatedMetadataByTag()
+      const lastUpdatedMetadataByTag = await this.metadata.getLastUpdatedMetadataByTag(this.tag)
 
       if (lastUpdatedMetadataByTag?.last_question_time) {
         startDate = Number(lastUpdatedMetadataByTag.last_question_time) / 1000 + 1
       }
 
-      const metadata = await this.metadata.createMetadata()
+      const metadata = await this.metadata.createMetadata(this.tag)
       let questions, lastQuestion, response
       let iterations = 0
 
@@ -65,7 +66,7 @@ export class QuestionsSOWorker implements WorkerSO {
       }
 
       if (metadataId) {
-        await this.metadata.saveMetadataOnError(metadataId, errorMessage)
+        await this.metadata.saveMetadataOnError(this.tag, metadataId, errorMessage)
       }
 
       return false
