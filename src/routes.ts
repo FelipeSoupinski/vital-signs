@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express'
 import { ProjectModel } from './project/project-model'
-import { makeQuestionsSOWorker, Scheduler } from './stack-overflow'
+import { Scheduler } from './stack-overflow'
 
 const route = Router()
 
@@ -11,15 +11,6 @@ route.get('/', async (req: Request, res: Response) => {
 route.get('/schedule', async (req: Request, res: Response) => {
   await new Scheduler().run()
   res.json({ success: true })
-})
-
-route.get('/questions', async (req: Request, res: Response) => {
-  const tag = 'phantomjs'
-  const QuestionSO = makeQuestionsSOWorker(tag)
-
-  res.json({
-    success: await QuestionSO.resolve()
-  })
 })
 
 route.post('/project', async (req: Request, res: Response) => {
