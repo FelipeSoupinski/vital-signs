@@ -17,7 +17,9 @@ route.post('/project', async (req: Request, res: Response) => {
   const data = {
     name: req.body.name,
     tag_so: req.body.tag_so,
-    link_gh: req.body.link_gh
+    link_gh: req.body.link_gh,
+    is_dead: req.body.is_dead,
+    death_date: req.body.death_date
   }
 
   res.json({
@@ -44,7 +46,7 @@ route.get('/metadata:tag', async (req: Request, res: Response) => {
 
   res.json({
     success: true,
-    data: await new MetadataSOModel().getByTag(tag)
+    data: await new MetadataSOModel().getLastUpdatedMetadataByTag(tag)
   })
 })
 

@@ -56,5 +56,7 @@ model Project {
   name                String @db.VarChar(255)
   tag_so              String @db.VarChar(255)
   link_gh             String @db.VarChar(255)
+  is_dead             Boolean @default(false)
+  death_date          DateTime?
   created_at          DateTime @default(now())
 }
