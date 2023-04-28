@@ -1,4 +1,5 @@
 require('dotenv').config()
+import cors from 'cors'
 import express from 'express'
 import route from './routes'
 import { bullServerAdapter } from './stack-overflow/utils'
@@ -6,6 +7,7 @@ import { Scheduler, WorkerQueueProcessor } from './stack-overflow'
 
 const app = express()
 
+app.use(cors)
 app.use(express.json())
 
 app.use('/admin/queues', bullServerAdapter.getRouter())
