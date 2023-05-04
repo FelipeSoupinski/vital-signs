@@ -30,14 +30,14 @@ route.post('/project', async (req: Request, res: Response) => {
 route.get('/projects', async (req: Request, res: Response) => {
   res.json({
     success: true,
-    data: await new ProjectModel().getAll()
+    projects: await new ProjectModel().getAll()
   })
 })
 
 route.get('/metadata', async (req: Request, res: Response) => {
   res.json({
     success: true,
-    data: await new MetadataSOModel().getAll()
+    metadata: await new MetadataSOModel().getAll()
   })
 })
 
@@ -46,7 +46,7 @@ route.get('/metadata:tag', async (req: Request, res: Response) => {
 
   res.json({
     success: true,
-    data: await new MetadataSOModel().getLastUpdatedMetadataByTag(tag)
+    metadata: await new MetadataSOModel().getLastUpdatedMetadataByTag(tag)
   })
 })
 
