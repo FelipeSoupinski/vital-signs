@@ -1,5 +1,6 @@
 import { Prisma, PrismaClient } from '@prisma/client'
 import { ProjectQueue } from '../stack-overflow/projects-queue'
+import { AnswerRateQuery } from './queries'
 
 const prisma = new PrismaClient()
 
@@ -35,6 +36,16 @@ export class ProjectModel {
 
       return !!projectCreated
 
+    } catch (error) {
+      console.error(error)
+      return false
+    }
+  }
+
+  async getAnswerRate(tag: string) {
+    try {
+      const answerRatesByTag = await prisma.$queryRawUnsafe(AnswerRateQuery(tag))
+      return answerRatesByTag
     } catch (error) {
       console.error(error)
       return false

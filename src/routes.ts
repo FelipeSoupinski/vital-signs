@@ -34,6 +34,15 @@ route.get('/projects', async (req: Request, res: Response) => {
   })
 })
 
+route.get('/answer-rate/:tag', async (req: Request, res: Response) => {
+  const tag = req.params.tag
+
+  res.json({
+    success: true,
+    answerRates: await new ProjectModel().getAnswerRate(tag)
+  })
+})
+
 route.get('/metadata', async (req: Request, res: Response) => {
   res.json({
     success: true,
@@ -41,7 +50,7 @@ route.get('/metadata', async (req: Request, res: Response) => {
   })
 })
 
-route.get('/metadata:tag', async (req: Request, res: Response) => {
+route.get('/metadata/:tag', async (req: Request, res: Response) => {
   const tag = req.params.tag
 
   res.json({
