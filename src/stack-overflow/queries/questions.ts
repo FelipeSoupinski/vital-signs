@@ -18,7 +18,7 @@ export class QuestionsSOWorker implements WorkerSO {
       const lastUpdatedMetadataByTag = await this.metadata.getLastUpdatedMetadataByTag(this.tag)
 
       if (lastUpdatedMetadataByTag?.last_question_time) {
-        startDate = Number(lastUpdatedMetadataByTag.last_question_time) / 1000 + 1
+        startDate = (Number(lastUpdatedMetadataByTag.last_question_time) / 1000) + 1
       }
 
       const metadata = await this.metadata.createMetadata(this.tag)

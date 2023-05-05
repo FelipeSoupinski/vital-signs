@@ -15,7 +15,7 @@ export function AnswerRateQuery(tag: string) {
           SUM(
             CAST (
               CASE 
-                WHEN is_answered = true
+                WHEN is_answered = false
                   THEN 1 
                   ELSE 0 
                 END AS INT
