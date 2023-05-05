@@ -42,6 +42,19 @@ export class ProjectModel {
     }
   }
 
+  async getProjectByTag(tag: string) {
+    try {
+      return await prisma.project.findFirst({
+        where: {
+          tag_so: tag
+        }
+      })
+    } catch (error) {
+      console.error(error)
+      return false
+    }
+  }
+
   async getAnswerRate(tag: string) {
     try {
       const answerRatesByTag = await prisma.$queryRawUnsafe(AnswerRateQuery(tag))

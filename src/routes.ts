@@ -34,12 +34,21 @@ router.get('/projects', async (req: Request, res: Response) => {
   })
 })
 
+router.get('/project/:tag', async (req: Request, res: Response) => {
+  const tag = req.params.tag
+
+  res.json({
+    success: true,
+    project: await new ProjectModel().getProjectByTag(tag)
+  })
+})
+
 router.get('/answer-rate/:tag', async (req: Request, res: Response) => {
   const tag = req.params.tag
 
   res.json({
     success: true,
-    answerRates: await new ProjectModel().getAnswerRate(tag)
+    answer_rates: await new ProjectModel().getAnswerRate(tag)
   })
 })
 
