@@ -2,8 +2,11 @@ export function AnswerRateQuery(tag: string) {
   return `
   	SELECT 
       T.month,
-      (T.question_count - T.unanswered_count) 
-        / CAST(T.question_count AS DECIMAL) 
+      ROUND(
+        (T.question_count - T.unanswered_count) 
+        / CAST(T.question_count AS DECIMAL),
+        2
+      )
       AS answer_rate
     FROM
       (
