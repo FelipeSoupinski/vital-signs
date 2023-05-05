@@ -32,12 +32,18 @@ export class QuestionsSOWorker implements WorkerSO {
         questions = response.data
 
         for (const question of questions.items) {
-          await prisma.question.create({
-            data: {
-              ...question,
-              creation_date: new Date(Number(question.creation_date) * 1000),
-              tag: this.tag
-            }
+          const data = {
+            ...question,
+            creation_date: new Date(Number(question.creation_date) * 1000),
+            tag: this.tag
+          }
+
+          await prisma.question.upsert({
+            where: {
+              question_id: question.question_id
+            },
+            update: data,
+            create: data
           })
         }
 
@@ -55,20 +61,10 @@ export class QuestionsSOWorker implements WorkerSO {
 
     } catch (error) {
       console.error(error)
-
       let errorMessage = String(error)
-
-      if (error instanceof Prisma.PrismaClientKnownRequestError) {
-        if (error.code === 'P2002') {
-          errorMessage = `There is a unique constraint violation, a new question cannot`
-            + ` be created with this question id`
-        }
-      }
-
       if (metadataId) {
         await this.metadata.saveMetadataOnError(this.tag, metadataId, errorMessage)
       }
-
       return false
     }
   }
