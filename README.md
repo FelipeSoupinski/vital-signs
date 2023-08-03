@@ -2,6 +2,12 @@
 
 Open source project to analyze signs of software ecosystems' death.
 
+## Require
+
+- Postgres connection
+- Redis server
+- StackOverflow API credentials
+
 ## Redis
 
 Require Redis connection
@@ -21,3 +27,8 @@ DATABASE_URL
 REDIS_HOST
 REDIS_PORT
 CONCURRENCY
+
+## Prisma Config
+
+> npm install
+> npx prisma migrate dev
